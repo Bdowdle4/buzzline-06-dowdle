@@ -1,0 +1,52 @@
+### On Windows, Use PowerShell (not cmd) - don't include the #:
+# py -3.11 -m venv .venv
+
+### On Mac  - don't include the #:
+# brew install python@3.11
+# python3 -m venv .venv
+
+### On Linux/WSL - don't include the #:
+# sudo apt update
+# sudo apt install python3.11 python3.11-venv
+# python3.11 -m venv .venv
+
+# ALWAYS activate the .venv before working on the project.
+# Activate whenever you open a new terminal. 
+
+### Windows PowerShell Command (don't include the #):
+# .\.venv\Scripts\activate
+
+### Mac/Linux Command (don't include the #):
+# source .venv/bin/activate
+
+### Windows Command (don't include the #):
+# py -m pip install --upgrade pip setuptools wheel
+# py -m pip install -r requirements.txt
+
+### Mac/Linux Command (don't include the #):
+# python3 -m pip install --upgrade pip setuptools wheel
+# python3 -m pip install --upgrade -r requirements.txt
+
+# Up-to-date package management tools
+pip
+setuptools
+wheel
+
+# Easy logging for monitoring code execution
+loguru
+
+# Environment variables management
+python-dotenv
+
+# pytest for lightweight testing
+pytest
+
+# Numerical computations and arrays (20-30 MB)
+numpy
+
+# Data manipulation and analysis (built on numpy, 10-20 MB)
+pandas
+
+# Kafka Python client (lightweight, ~1 MB)
+# Supports Kafka 3.5+ with KRaft mode (no ZooKeeper required)
+kafka-python-ng
