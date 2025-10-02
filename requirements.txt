@@ -50,3 +50,6 @@ pandas
 # Kafka Python client (lightweight, ~1 MB)
 # Supports Kafka 3.5+ with KRaft mode (no ZooKeeper required)
 kafka-python-ng
+
+# Core library for creating visualizations (~30 MB)
+matplotlib
