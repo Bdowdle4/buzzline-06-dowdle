@@ -2,11 +2,17 @@
 # and displays live animated visualization.
 
 import json
+import sys
+import pathlib
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from collections import defaultdict
 from kafka import KafkaConsumer
 from utils.utils_logger import get_logger
+
+# Add project root
+PROJECT_ROOT = pathlib.Path(__file__).parent.parent.resolve()
+sys.path.append(str(PROJECT_ROOT))
 
 # Configurations
 TOPIC_NAME = "buzzline_edm"

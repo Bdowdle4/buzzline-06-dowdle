@@ -3,10 +3,15 @@
 
 import json
 import time
+import sys
+import pathlib
 from kafka import KafkaProducer
-
 from utils.utils_logger import get_logger
 from utils.utils_data import generate_message
+
+# Add project root to sys.path
+PROJECT_ROOT = pathlib.Path(__file__).parent.parent.resolve()
+sys.path.append(str(PROJECT_ROOT))
 
 # Configurations
 TOPIC_NAME = "buzzline_edm"

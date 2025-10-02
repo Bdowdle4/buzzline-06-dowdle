@@ -29,4 +29,30 @@ The goal is to show how streaming data can be used to track *who’s trending, w
 
 ---
 
+### 0. If Windows, start WSL
+Open a PowerShell terminal in VS Code. Run the following command:
+```wsl
+```
+
+### 1. Start Kafka
+```chmod +x scripts/prepare_kafka.sh
+scripts/prepare_kafka.sh
+cd ~/kafka
+bin/kafka-server-start.sh config/kraft/server.properties
+```
+**Keep this terminal open!**
+
+In a new WSL terminal, create the topic:
+```kafka-topics --create --topic buzzline_edm --bootstrap-server localhost:9092
+```
+
+### 2. Run the Producer
+In a new powershell terminal
+```python producers/edm_producer.py
+```
+
+### 3. Run the Consumer
+In a new powershell terminal
+```python consumers/edm_consumer.py
+```
 
