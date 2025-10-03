@@ -85,3 +85,20 @@ python -m consumers.edm_consumer_line
 You should see a live animated chart updating as new buzz messages stream in.
 
 ****
+
+## Dynamic Visualization
+1. Bar Chart (Artist Mentions)
+  Updated every 3 seconds, it provides a snapshot of which artists are drawing the most attention:
+  * X-axis: Artists
+  * Y-axis: Total Mentions
+  * Caption: Highlights which artist is currently the most popular
+Example Screenshots:
+![Artist Bar Chart]("C:\Users\Britt\Documents\44671\buzzline-06-dowdle\Images\Screenshot 2025-10-03 171516.png")
+1. Line Chart (Stage Mentions Over Time)
+  Updated every 3 seconds, it visualizes audience trends across stages as the festival progresses: 
+  * X-axis: Time (update intervals)
+  * Y-axis: Mentions per interval
+  * Lines: One per stage
+  * Caption: Highlights which stage currently has the biggest crowd
+Example Screenshots:
+![Stage Line Chart]("C:\Users\Britt\Documents\44671\buzzline-06-dowdle\Images\Screenshot 2025-10-03 171616.png")
