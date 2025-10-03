@@ -26,17 +26,19 @@ logger = get_logger("edm_consumer_line")
 consumer = KafkaConsumer(
     TOPIC_NAME,
     bootstrap_servers=BOOTSTRAP_SERVERS,
-    auto_offset_reset="earliest",
+    auto_offset_reset="latest",
     enable_auto_commit=True,
     value_deserializer=lambda m: json.loads(m.decode("utf-8"))
 )
 
 # Data Structures
-# Keep last N time points for visualization
-MAX_POINTS = 20
+MAX_POINTS = 20  # Keep last N time points for visualization
 
-# Dictionary: stage -> deque of counts
+# Dictionary: stage -> deque of counts per time interval
 stage_counts = defaultdict(lambda: deque(maxlen=MAX_POINTS))
+
+# Track cumulative totals for "biggest crowd"
+cumulative_stage_counts = defaultdict(int)
 
 # Global time step counter (acts like x-axis ticks)
 time_index = itertools.count()
@@ -50,7 +52,7 @@ def update_chart(frame):
     Update function for Matplotlib animation.
     Reads new Kafka messages, updates counts, logs to file, and redraws line chart.
     """
-    global stage_counts
+    global stage_counts, cumulative_stage_counts
 
     # Poll Kafka for new messages
     new_counts = defaultdict(int)
@@ -61,6 +63,7 @@ def update_chart(frame):
             data = record.value
             stage = data.get("stage", "Unknown")
             new_counts[stage] += 1
+            cumulative_stage_counts[stage] += 1
 
             # Log to console
             logger.info(f"Consumed message: {data}")
@@ -72,7 +75,7 @@ def update_chart(frame):
     # Advance time step
     t = next(time_index)
 
-    # Update each stage deque
+    # Update each stage deque with this interval's counts
     for stage in stage_counts.keys() | new_counts.keys():
         stage_counts[stage].append(new_counts.get(stage, 0))
 
@@ -89,18 +92,18 @@ def update_chart(frame):
     ax.legend(loc="upper left")
     ax.grid(True, linestyle="--", alpha=0.5)
 
-    # Add caption about current buzz peak
-    if new_counts:
-        peak_stage = max(new_counts, key=new_counts.get)
-        peak_val = new_counts[peak_stage]
+    # Caption: highlight stage with biggest crowd so far
+    if cumulative_stage_counts:
+        peak_stage = max(cumulative_stage_counts, key=cumulative_stage_counts.get)
+        peak_val = cumulative_stage_counts[peak_stage]
         ax.text(
-            0.95, 0.01,
-            f"{peak_stage} just got {peak_val} new mentions",
+            0.98, 0.95,
+            f"'{peak_stage}' has the biggest crowd right now ({peak_val} mentions total)",
             transform=ax.transAxes,
             ha="right",
-            va="bottom",
-            fontsize=10,
-            color="darkgreen",
+            va="top",
+            fontsize=8,
+            color="darkred",
             weight="bold"
         )
     else:
@@ -110,9 +113,17 @@ def update_chart(frame):
             ha="center", va="center"
         )
 
-
 # Main
 if __name__ == "__main__":
     logger.info("Starting EDM Buzzline consumer (line chart)...")
+
+    # Reset log file so each run starts fresh
+    with open(DATA_FILE, "w") as f:
+        f.write("")  # clear contents
+
+    # Reset counters at startup
+    stage_counts.clear()
+    cumulative_stage_counts.clear()
+
     ani = FuncAnimation(fig, update_chart, interval=2000)  # Update every 2s
     plt.show()
