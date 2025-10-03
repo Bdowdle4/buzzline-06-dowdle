@@ -102,3 +102,15 @@ Example Screenshots:
   * Caption: Highlights which stage currently has the biggest crowd
 Example Screenshots:
 ![Stage Line Chart]("C:\Users\Britt\Documents\44671\buzzline-06-dowdle\Images\Screenshot 2025-10-03 171616.png")
+
+****
+## Insight
+This project demonstrates how streaming pipelines can provide real-time crowd analytics for festivals. In a real deployment, similar pipelines could:
+
+- Track social media buzz for artists in real-time
+
+- Alert organizers when a stage is becoming overcrowded
+
+- Optimize scheduling or promotions based on live feedback
+
+Thank you for taking the time to review my project!
