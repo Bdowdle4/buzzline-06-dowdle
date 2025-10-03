@@ -1,5 +1,5 @@
 # Subscribes to Kafka, processes buzz messages,
-# and displays live animated visualization.
+# and displays live animated bar chart.
 
 import json
 import sys
@@ -17,6 +17,7 @@ sys.path.append(str(PROJECT_ROOT))
 # Configurations
 TOPIC_NAME = "buzzline_edm"
 BOOTSTRAP_SERVERS = "localhost:9092"
+
 # Initialize logger
 logger = get_logger("edm_consumer")
 

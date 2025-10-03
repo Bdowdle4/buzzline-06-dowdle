@@ -57,7 +57,11 @@ In a new powershell terminal
 
 ### 3. Run the Consumer
 In a another new powershell terminal
-```python -m consumers.edm_consumer
+``` # Bar Chart Consumer
+python -m consumers.edm_consumer
+```
+``` # Line Chart Consumer
+python -m consumers.edm_consumer_line
 ```
 
 You should see a live animated chart updating as new buzz messages stream in.
