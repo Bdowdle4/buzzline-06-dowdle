@@ -46,13 +46,20 @@ In a new WSL terminal, create the topic:
 ```kafka-topics --create --topic buzzline_edm --bootstrap-server localhost:9092
 ```
 
+Verify topic was successfully created
+```bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+```
+
 ### 2. Run the Producer
 In a new powershell terminal
-```python producers/edm_producer.py
+```python -m producers.edm_producer
 ```
 
 ### 3. Run the Consumer
-In a new powershell terminal
-```python consumers/edm_consumer.py
+In a another new powershell terminal
+```python -m consumers.edm_consumer
 ```
 
+You should see a live animated chart updating as new buzz messages stream in.
+
+****

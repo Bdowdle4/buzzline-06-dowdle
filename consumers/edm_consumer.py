@@ -65,7 +65,7 @@ def update_chart(frame):
         ax.barh(top_artists, top_counts, color="skyblue")
         ax.set_xlabel("Mentions")
         ax.set_ylabel("Artist")
-        ax.set_title("🎶 Live Festival Buzz: Top Artist Mentions", fontsize=14)
+        ax.set_title("Live Festival Buzz: Top Artist Mentions", fontsize=14)
 
         # Add caption with current leader
         leader = top_artists[0]

@@ -1,10 +1,11 @@
-# Generates live-streamed JSON messages about
-# festival buzz and sends them to Kafka.
+# Streams buzz messages into Kafka and 
+# writes them to edm_live.json for backup/testing.
 
 import json
 import time
 import sys
 import pathlib
+import random
 from kafka import KafkaProducer
 from utils.utils_logger import get_logger
 from utils.utils_data import generate_message
@@ -17,6 +18,11 @@ sys.path.append(str(PROJECT_ROOT))
 TOPIC_NAME = "buzzline_edm"
 BOOTSTRAP_SERVERS = "localhost:9092"
 SLEEP_INTERVAL = 2   # Seconds between messages
+
+DATA_FOLDER = PROJECT_ROOT.joinpath("data")
+DATA_FOLDER.mkdir(exist_ok=True)
+DATA_FILE = DATA_FOLDER.joinpath("edm_live.json")
+
 # Initialize logger
 logger = get_logger("edm_producer")
 
@@ -29,28 +35,33 @@ producer = KafkaProducer(
 # Producer Loop
 def run_producer():
     logger.info("Starting EDM Buzzline producer...")
+    # Reset local file each run
+    with open(DATA_FILE, "w") as f:
+        f.write("")
+
     try:
         while True:
-            # Generate a buzz message
+            # Generate random buzz message
             message = generate_message()
-            
+
             # Send to Kafka
             producer.send(TOPIC_NAME, value=message)
-            producer.flush()
 
-            logger.info(f"Produced message: {message}")
+            # Append to local JSON file
+            with open(DATA_FILE, "a") as f:
+                f.write(json.dumps(message) + "\n")
 
-            # Wait before sending next message
-            time.sleep(SLEEP_INTERVAL)
+            logger.info(f"Produced: {message}")
+
+            # Sleep for a short random interval to simulate "live" buzz
+            time.sleep(random.uniform(0.5, 2.0))
 
     except KeyboardInterrupt:
         logger.info("Producer stopped by user.")
-    except Exception as e:
-        logger.error(f"Producer error: {e}")
     finally:
+        producer.flush()
         producer.close()
-        logger.info("Kafka producer closed.")
 
-
+# Main
 if __name__ == "__main__":
     run_producer()
