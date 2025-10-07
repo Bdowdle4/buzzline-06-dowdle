@@ -48,15 +48,27 @@ wsl
 
 ### 1. Start Kafka
 ```
-chmod +x scripts/prepare_kafka.sh
-scripts/prepare_kafka.sh
 cd ~/kafka
+
+# Generate cluster UUID
+KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
+echo "Generated Cluster ID: $KAFKA_CLUSTER_ID"
+
+# Format storage with the cluster ID
+bin/kafka-storage.sh format -t $KAFKA_CLUSTER_ID -c config/kraft/server.properties
+
+# Verify configuration file exists
+ls -la config/kraft/server.properties
+
+# start kafka broker
 bin/kafka-server-start.sh config/kraft/server.properties
 ```
 **Keep this terminal open!**
 
 In a new WSL terminal, create the topic:
 ```
+WSL
+cd ~/kafka
 kafka-topics --create --topic buzzline_edm --bootstrap-server localhost:9092
 ```
 
@@ -93,7 +105,7 @@ You should see a live animated chart updating as new buzz messages stream in.
   * Y-axis: Total Mentions
   * Caption: Highlights which artist is currently the most popular
 Example Screenshots:
-![Artist Bar Chart]("C:\Users\Britt\Documents\44671\buzzline-06-dowdle\Images\Screenshot 2025-10-03 171516.png")
+![Artist Bar Chart]("C:\Users\Britt\Documents\44671\Screenshot 2025-10-07 181453.png")
 1. Line Chart (Stage Mentions Over Time)
   Updated every 3 seconds, it visualizes audience trends across stages as the festival progresses: 
   * X-axis: Time (update intervals)
@@ -101,7 +113,7 @@ Example Screenshots:
   * Lines: One per stage
   * Caption: Highlights which stage currently has the biggest crowd
 Example Screenshots:
-![Stage Line Chart]("C:\Users\Britt\Documents\44671\buzzline-06-dowdle\Images\Screenshot 2025-10-03 171616.png")
+![Stage Line Chart]("C:\Users\Britt\Documents\44671\Screenshot 2025-10-07 181637.png")
 
 ****
 ## Insight

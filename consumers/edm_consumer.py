@@ -87,5 +87,6 @@ def update_chart(frame):
 # Main
 if __name__ == "__main__":
     logger.info("Starting EDM Buzzline consumer...")
+    artist_mentions.clear()  # ensure clean start
     ani = FuncAnimation(fig, update_chart, interval=2000)  # Update every 2s
     plt.show()
