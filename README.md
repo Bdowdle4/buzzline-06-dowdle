@@ -105,7 +105,7 @@ You should see a live animated chart updating as new buzz messages stream in.
   * Y-axis: Total Mentions
   * Caption: Highlights which artist is currently the most popular
 Example Screenshots:
-![Artist Bar Chart]("C:\Users/Britt/Documents/44671/Screenshot 2025-10-07 181453.png")
+![Artist Bar Chart](https://github.com/Bdowdle4/buzzline-06-dowdle/blob/main/Images/Screenshot%202025-10-07%20181453.png)
 1. Line Chart (Stage Mentions Over Time)
   Updated every 3 seconds, it visualizes audience trends across stages as the festival progresses: 
   * X-axis: Time (update intervals)
@@ -113,7 +113,7 @@ Example Screenshots:
   * Lines: One per stage
   * Caption: Highlights which stage currently has the biggest crowd
 Example Screenshots:
-![Stage Line Chart]("C:/Users/Britt/Documents/44671/Screenshot 2025-10-07 181637.png")
+![Stage Line Chart](https://github.com/Bdowdle4/buzzline-06-dowdle/blob/main/Images/Screenshot%202025-10-07%20181637.png)
 
 ****
 ## Insight
